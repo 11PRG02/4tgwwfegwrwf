@@ -4,7 +4,222 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>★ ~ Welcome to My Homepage ~ ★</title>
-<link rel="stylesheet" href="styles.css">
+<style>
+*{ box-sizing:border-box; margin:0; padding:0; }
+html,body{ height:100%; font-family:Verdana, Geneva, Tahoma, sans-serif; }
+.hidden{ display:none !important; }
+
+/* ===== Desktop / wallpaper (Vista aurora) ===== */
+#desktop{
+  position:fixed; inset:0; overflow:hidden; cursor:default;
+  background:radial-gradient(140% 90% at 50% 118%, #163d2e 0%, #0c2a44 38%, #071a33 70%, #050d1f 100%);
+}
+#desktop::before{
+  content:""; position:absolute; left:-20%; right:-20%; top:6%; height:55%;
+  background:
+    radial-gradient(60% 80% at 30% 50%, rgba(80,255,170,.28), transparent 60%),
+    radial-gradient(60% 80% at 72% 40%, rgba(90,180,255,.30), transparent 60%);
+  filter:blur(28px); transform:skewY(-6deg);
+}
+#desktop::after{
+  content:""; position:absolute; left:0; right:0; bottom:0; height:26%;
+  background:radial-gradient(120% 100% at 50% 100%, #0a2a1c 0%, #06160f 60%, transparent 100%);
+}
+
+/* ===== Desktop icons ===== */
+.desktop-icons{ position:absolute; top:14px; left:14px; display:flex; flex-direction:column; gap:6px; }
+.desk-icon{ width:78px; text-align:center; padding:6px 2px; border-radius:5px; border:1px solid transparent; cursor:pointer; }
+.desk-icon svg{ width:40px; height:40px; filter:drop-shadow(1px 2px 2px rgba(0,0,0,.6)); }
+.desk-icon span{ display:block; color:#fff; font:11px Verdana; margin-top:3px; text-shadow:1px 1px 2px #000, 0 0 4px #000; }
+.desk-icon:hover{ background:rgba(255,255,255,.16); border-color:rgba(255,255,255,.35); }
+
+/* ===== Sidebar gadgets ===== */
+.sidebar{ position:absolute; right:10px; top:12px; width:140px; display:flex; flex-direction:column; gap:16px; align-items:center; }
+.gadget{ position:relative; }
+
+/* Analog clock (skeuomorphic, glass dome) */
+.clock{
+  width:120px; height:120px; border-radius:50%; position:relative;
+  background:radial-gradient(circle at 50% 32%, #fff, #d8dde2 68%, #b6bcc2);
+  border:7px solid #c9ced3;
+  box-shadow:0 8px 16px rgba(0,0,0,.45), inset 0 3px 8px rgba(255,255,255,.9), inset 0 -8px 12px rgba(0,0,0,.18);
+}
+.clock::after{ content:""; position:absolute; inset:6px; border-radius:50%;
+  background:linear-gradient(160deg, rgba(255,255,255,.7), rgba(255,255,255,0) 55%); }
+.hand{ position:absolute; left:50%; bottom:50%; transform-origin:bottom center; background:#1a1a1a; border-radius:3px; z-index:2; }
+.hour{ width:5px; height:30px; margin-left:-2.5px; }
+.min{ width:3px; height:42px; margin-left:-1.5px; }
+.sec{ width:1.6px; height:48px; margin-left:-.8px; background:#e2382f; }
+.clock-center{ position:absolute; left:50%; top:50%; width:9px; height:9px; margin:-4.5px 0 0 -4.5px; border-radius:50%;
+  background:radial-gradient(circle at 35% 30%, #555, #111); z-index:3; }
+
+/* Tear-off calendar (skeuomorphic) */
+.cal{ width:130px; border-radius:6px; overflow:hidden; box-shadow:0 8px 16px rgba(0,0,0,.45); border:1px solid #6a6a6a; }
+.cal-head{ background:linear-gradient(180deg,#ff9a5a,#d8451f); color:#fff; text-align:center; padding:5px; font:bold 13px Verdana; text-shadow:0 1px 0 rgba(0,0,0,.3); }
+.cal-body{ background:#fff; text-align:center; padding:8px 6px 10px; }
+.cal-body .day{ font:bold 11px Verdana; color:#888; }
+.cal-body .date{ font:bold 46px Georgia, serif; color:#1a1a1a; line-height:1; }
+
+/* ===== Windows ===== */
+.window{
+  position:absolute; min-width:220px; display:flex; flex-direction:column;
+  border-radius:8px 8px 7px 7px;
+  box-shadow:0 0 0 1px rgba(0,0,0,.45), 0 18px 50px rgba(0,0,0,.55), 0 2px 6px rgba(0,0,0,.4);
+}
+.window.maxed{ left:6px !important; top:6px !important; right:6px; bottom:46px; width:auto !important; }
+
+/* Aero glass (Vista/7) */
+.window.aero{
+  background:rgba(220,235,255,.55);
+  -webkit-backdrop-filter:blur(14px) saturate(150%); backdrop-filter:blur(14px) saturate(150%);
+  border:1px solid rgba(255,255,255,.55);
+}
+.window.aero .titlebar{
+  height:30px; display:flex; align-items:center; justify-content:space-between; padding:0 8px 0 12px; cursor:grab;
+  background:linear-gradient(180deg, rgba(255,255,255,.6), rgba(255,255,255,.05) 55%, rgba(120,170,220,.25));
+  border-radius:7px 7px 0 0; border-bottom:1px solid rgba(255,255,255,.4);
+}
+.window.aero .title{ font:bold 12px Verdana; color:#0b2a4a; text-shadow:0 1px 0 rgba(255,255,255,.8); }
+.window.aero .win-body{ background:rgba(246,250,255,.94); border-radius:0 0 6px 6px; overflow:hidden; flex:1; }
+
+/* Aqua (Mac OS X brushed metal + pinstripes) */
+.window.aqua{
+  background:linear-gradient(180deg,#cfd6dc,#b9c0c7); border:1px solid #8a929a;
+}
+.window.aqua .titlebar{
+  height:30px; display:flex; align-items:center; justify-content:space-between; padding:0 10px; cursor:grab;
+  background:
+    repeating-linear-gradient(0deg, rgba(255,255,255,.08) 0 1px, rgba(0,0,0,.05) 1px 2px),
+    linear-gradient(180deg,#dfe4e8,#b7bec5);
+  border-radius:7px 7px 0 0; border-bottom:1px solid #9aa2aa;
+}
+.window.aqua .title{ font:bold 13px "Lucida Grande", Verdana; color:#1c1c1c; text-shadow:0 1px 0 rgba(255,255,255,.7); }
+.window.aqua .win-body{
+  background:
+    repeating-linear-gradient(0deg, rgba(255,255,255,.06) 0 1px, rgba(0,0,0,.05) 1px 2px),
+    linear-gradient(180deg,#e9edf0,#d2d8dd);
+  border-radius:0 0 6px 6px; flex:1;
+}
+
+/* Window controls */
+.win-controls{ display:flex; gap:6px; }
+.wc{ width:18px; height:18px; border-radius:9px; cursor:pointer; border:1px solid rgba(0,0,0,.35);
+  background:linear-gradient(180deg,#fff,#cfe0f2); box-shadow:inset 0 1px 0 #fff; }
+.wc.close:hover{ background:linear-gradient(180deg,#ff9a8a,#e23b3b); }
+.wc.max:hover{ background:linear-gradient(180deg,#a9e08a,#5fae35); }
+.wc.min:hover{ background:linear-gradient(180deg,#ffe08a,#e0a023); }
+.win-controls.mac{ gap:5px; }
+.win-controls.mac .wc{ width:12px; height:12px; border-radius:6px; }
+.tl-close{ background:radial-gradient(circle at 35% 30%,#ff9a8a,#e0382f); border-color:#a0231b; }
+.tl-min{ background:radial-gradient(circle at 35% 30%,#ffe08a,#e0a023); border-color:#a0731b; }
+.tl-max{ background:radial-gradient(circle at 35% 30%,#9be08a,#2fa038); border-color:#1b7a23; }
+
+/* ===== Welcome page content ===== */
+.addrbar{ display:flex; align-items:center; gap:6px; padding:6px 8px; background:linear-gradient(180deg,#e9eef4,#d7dde5); border-bottom:1px solid #b9c2cc; }
+.addr-label{ font:bold 11px Verdana; color:#333; }
+.addr-url{ flex:1; background:#fff; border:1px solid #9aa; border-radius:3px; padding:3px 6px; font:12px "Courier New"; color:#1a3a6a; }
+.marquee{ overflow:hidden; white-space:nowrap; background:#10131a; color:#ffe65a; padding:5px 0; font:bold 12px Verdana; }
+.marquee span{ display:inline-block; padding-left:100%; animation:marq 16s linear infinite; }
+@keyframes marq{ to{ transform:translateX(-100%); } }
+.page-content{ padding:14px; color:#1a1a1a; }
+.hero-banner{ text-align:center; font:bold 22px "Comic Sans MS", cursive; margin:10px 0 14px; padding:12px; color:#fff;
+  background:linear-gradient(180deg,#5cb8ff,#1a78d6 50%,#0a5fb0); border:1px solid #0a4a8c; border-radius:8px;
+  box-shadow:inset 0 2px 4px rgba(255,255,255,.6), inset 0 -10px 14px -8px rgba(0,0,0,.5); text-shadow:0 1px 1px rgba(0,0,0,.4); }
+.page-content p{ font:13px Verdana; line-height:1.6; margin-bottom:10px; }
+.badges{ display:flex; flex-wrap:wrap; gap:6px; margin:10px 0; }
+.badge{ font:bold 10px Verdana; padding:3px 7px; border-radius:3px; color:#222;
+  background:linear-gradient(180deg,#eef,#ccd); border:1px solid #778; box-shadow:inset 0 1px 0 #fff; }
+.counter-row{ font:13px Verdana; margin:12px 0; }
+.counter{ font:20px "Courier New", monospace; letter-spacing:3px; background:#000; color:#39ff39;
+  padding:4px 8px; border-radius:4px; border:1px solid #444; box-shadow:inset 0 0 8px #0a0; }
+.cta{ margin-top:14px; display:flex; gap:10px; }
+
+/* Aqua candy buttons */
+.aqua-btn{
+  position:relative; cursor:pointer; border:1px solid #0a4a8c; border-radius:14px; padding:8px 20px; color:#fff;
+  font:bold 12px Verdana; text-shadow:0 -1px 0 rgba(0,0,0,.4);
+  background:linear-gradient(180deg,#5cb8ff 0%,#1a78d6 48%,#0a5fb0 52%,#0d6cc4 100%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.6), inset 0 -8px 12px -6px rgba(0,0,0,.5), 0 1px 2px rgba(0,0,0,.3);
+}
+.aqua-btn::before{ content:""; position:absolute; left:5px; right:5px; top:2px; height:45%; border-radius:10px;
+  background:linear-gradient(180deg,rgba(255,255,255,.75),rgba(255,255,255,.1)); pointer-events:none; }
+.aqua-btn:active{ background:linear-gradient(0deg,#5cb8ff 0%,#1a78d6 48%,#0a5fb0 52%,#0d6cc4 100%); }
+.aqua-btn.sm{ padding:4px 12px; border-radius:10px; font-size:11px; }
+.aqua-btn.green{ border-color:#1b5e1b;
+  background:linear-gradient(180deg,#8be08a 0%,#4caf3f 48%,#2f8f2a 52%,#3aa035 100%); }
+
+/* ===== Calculator (skeuomorphic) ===== */
+.calc{ background:linear-gradient(180deg,#3a3d42,#222427); border:1px solid #111; border-radius:8px; padding:12px;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.15), inset 0 -12px 22px rgba(0,0,0,.5); }
+.calc-screen{ background:linear-gradient(180deg,#9bd79f,#6fb074); color:#0a2a10; font:26px "Courier New",monospace;
+  text-align:right; padding:10px 12px; border-radius:4px; margin-bottom:10px; min-height:40px;
+  box-shadow:inset 0 3px 6px rgba(0,0,0,.5), inset 0 -1px 0 rgba(255,255,255,.4); border:1px solid #2a5a2e; text-shadow:0 0 6px rgba(0,0,0,.25); }
+.calc-keys{ display:grid; grid-template-columns:repeat(4,1fr); gap:6px; }
+.calc-key{ border-radius:6px; padding:10px 0; font:bold 14px Verdana; color:#1a1a1a; cursor:pointer; text-shadow:0 1px 0 #fff;
+  background:linear-gradient(180deg,#fdfdfd,#c9ccd0); border:1px solid #8a8d92;
+  box-shadow:inset 0 1px 0 #fff, 0 2px 2px rgba(0,0,0,.4); }
+.calc-key:active{ background:linear-gradient(0deg,#fdfdfd,#c9ccd0); box-shadow:inset 0 2px 4px rgba(0,0,0,.4); transform:translateY(1px); }
+.calc-key.op{ background:linear-gradient(180deg,#ffd28a,#f0a040); border-color:#b06a1b; color:#3a1e00; }
+.calc-key.eq{ background:linear-gradient(180deg,#8fd0ff,#2a7fd0); color:#fff; border-color:#1a4a8c; text-shadow:0 -1px 0 rgba(0,0,0,.3); }
+.calc-key.zero{ grid-column:span 2; }
+
+/* ===== Sticky note (skeuomorphic) ===== */
+.sticky{ position:relative; background:linear-gradient(180deg,#fff7a0,#ffe65a); border-radius:2px; padding:16px; min-height:130px;
+  font:14px "Comic Sans MS", cursive; color:#5a4a00; line-height:1.6; box-shadow:0 8px 16px rgba(0,0,0,.3), inset 0 1px 0 rgba(255,255,255,.6);
+  transform:rotate(-1.5deg); outline:none; }
+.sticky::before{ content:""; position:absolute; top:-9px; left:50%; width:72px; height:18px;
+  transform:translateX(-50%) rotate(2deg); background:rgba(255,255,255,.55); border:1px solid rgba(0,0,0,.06); }
+
+/* ===== Notepad (skeuomorphic lined paper) ===== */
+.notepad{ background:
+    linear-gradient(90deg,#c0392b 0 34px, #fff 34px),
+    repeating-linear-gradient(#fff 0 27px, #d7e3f0 27px 28px);
+  border-radius:4px; padding:6px 10px 12px 44px; min-height:210px; outline:none;
+  font:15px "Comic Sans MS", cursive; color:#223; line-height:28px;
+  box-shadow:inset 0 0 30px rgba(0,0,0,.08); border:1px solid #aab; }
+
+/* ===== Start menu ===== */
+#start-menu{ position:absolute; left:6px; bottom:46px; width:370px; height:460px; border-radius:8px; overflow:hidden;
+  display:flex; flex-direction:column; z-index:9999;
+  background:rgba(220,235,255,.5); -webkit-backdrop-filter:blur(16px) saturate(150%); backdrop-filter:blur(16px) saturate(150%);
+  border:1px solid rgba(255,255,255,.55);
+  box-shadow:0 0 0 1px rgba(0,0,0,.4), 0 20px 50px rgba(0,0,0,.5); }
+.sm-user{ display:flex; align-items:center; gap:10px; padding:12px; color:#fff; font:bold 14px Verdana; text-shadow:0 1px 2px rgba(0,0,0,.5);
+  background:linear-gradient(180deg, rgba(80,150,210,.55), rgba(40,90,150,.35)); border-bottom:1px solid rgba(255,255,255,.4); }
+.sm-avatar{ width:42px; height:42px; border-radius:50%; border:2px solid #fff;
+  background:radial-gradient(circle at 40% 35%, #ffd9a0, #e8a14a); box-shadow:0 2px 6px rgba(0,0,0,.4); }
+.sm-cols{ flex:1; display:flex; }
+.sm-left{ flex:1.1; background:rgba(255,255,255,.6); padding:6px; }
+.sm-right{ flex:1; padding:8px 10px; color:#0b2a4a; font:13px Verdana; }
+.sm-item{ display:flex; align-items:center; gap:8px; padding:6px 8px; border-radius:4px; cursor:pointer; color:#113; font:13px Verdana; }
+.sm-item:hover{ background:rgba(120,180,240,.5); color:#fff; }
+.sm-ic{ font-size:15px; }
+.sm-sep{ height:1px; background:rgba(0,0,0,.15); margin:5px 4px; }
+.sm-power{ color:#a33; }
+.sm-search{ padding:8px; border-top:1px solid rgba(255,255,255,.4); background:rgba(255,255,255,.3); }
+.sm-search input{ width:100%; padding:6px 10px; border-radius:14px; border:1px solid #9aa; font:12px Verdana; outline:none; }
+
+/* ===== Taskbar ===== */
+#taskbar{ position:absolute; left:0; right:0; bottom:0; height:40px; display:flex; align-items:center; gap:8px; padding:0 8px 0 4px; z-index:9000;
+  background:linear-gradient(180deg, rgba(255,255,255,.4), rgba(110,150,200,.15));
+  -webkit-backdrop-filter:blur(14px) saturate(150%); backdrop-filter:blur(14px) saturate(150%);
+  border-top:1px solid rgba(255,255,255,.55);
+  box-shadow:0 -2px 12px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.6); }
+#start-orb{ width:54px; height:54px; border:none; cursor:pointer; position:relative; margin:-8px 2px -8px 0; border-radius:50%;
+  background:radial-gradient(circle at 50% 34%, #c6f3ff, #2aa8e8 46%, #0a5fa8 82%);
+  box-shadow:inset 0 2px 5px rgba(255,255,255,.95), inset 0 -7px 12px rgba(0,0,0,.45), 0 2px 8px rgba(0,0,0,.5); }
+#start-orb:hover{ filter:brightness(1.1); }
+#start-orb .flag{ width:30px; height:30px; position:absolute; left:12px; top:12px; filter:drop-shadow(0 1px 1px rgba(0,0,0,.5)); }
+.task-apps{ display:flex; gap:6px; align-items:center; }
+.task-app{ height:30px; max-width:170px; padding:0 12px; border-radius:6px; cursor:pointer; overflow:hidden; white-space:nowrap;
+  color:#0b2a4a; font:bold 11px Verdana; text-shadow:0 1px 0 rgba(255,255,255,.7); border:1px solid rgba(255,255,255,.4);
+  background:linear-gradient(180deg,rgba(255,255,255,.45),rgba(255,255,255,.05)); box-shadow:inset 0 1px 0 rgba(255,255,255,.6); }
+.task-app:hover{ background:linear-gradient(180deg,rgba(255,255,255,.7),rgba(255,255,255,.2)); }
+.tray{ margin-left:auto; display:flex; align-items:center; gap:10px; height:30px; padding:0 10px; border-radius:6px;
+  background:linear-gradient(180deg,rgba(255,255,255,.18),rgba(0,0,0,.06)); border:1px solid rgba(255,255,255,.3); }
+.tray-icons{ font-size:13px; }
+#clock{ color:#0b2a4a; font:bold 12px Verdana; text-shadow:0 1px 0 rgba(255,255,255,.7); }
+</style>
 </head>
 <body>
 <div id="desktop">
@@ -218,6 +433,124 @@
   </div>
 
 </div>
-<script src="script.js"></script>
+<script>
+// ---------- Clocks ----------
+function tick(){
+  const d = new Date();
+  let h = d.getHours(), m = d.getMinutes();
+  const ap = h >= 12 ? 'PM' : 'AM';
+  h = h % 12 || 12;
+  document.getElementById('clock').textContent = `${h}:${String(m).padStart(2,'0')} ${ap}`;
+  const setH = (sel,deg)=>{ const el=document.querySelector(sel); if(el) el.style.transform=`rotate(${deg}deg)`; };
+  setH('.hour', (d.getHours()%12)*30 + d.getMinutes()*0.5);
+  setH('.min',  d.getMinutes()*6 + d.getSeconds()*0.1);
+  setH('.sec',  d.getSeconds()*6);
+}
+setInterval(tick, 1000); tick();
+
+// ---------- Calendar ----------
+(function(){
+  const d = new Date();
+  const months=['January','February','March','April','May','June','July','August','September','October','November','December'];
+  const days=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  document.querySelector('.cal-body .day').textContent = days[d.getDay()];
+  document.querySelector('.cal-head .month').textContent = months[d.getMonth()];
+  document.querySelector('.cal-body .date').textContent = d.getDate();
+})();
+
+// ---------- Window management ----------
+let z = 10;
+const windows = [...document.querySelectorAll('.window')];
+const focusWin = w => { w.style.zIndex = ++z; };
+function openWin(id){ const w=document.getElementById(id); if(!w) return; w.classList.remove('hidden'); focusWin(w); }
+
+windows.forEach(w=>{
+  w.addEventListener('pointerdown', ()=>focusWin(w));
+  const tb = w.querySelector('.titlebar');
+  let drag = null;
+  tb.addEventListener('pointerdown', e=>{
+    if(e.target.closest('.wc')) return;
+    if(w.classList.contains('maxed')) return;
+    focusWin(w);
+    drag = { x:e.clientX - w.offsetLeft, y:e.clientY - w.offsetTop };
+    tb.setPointerCapture(e.pointerId);
+  });
+  tb.addEventListener('pointermove', e=>{
+    if(!drag) return;
+    w.style.left = (e.clientX - drag.x) + 'px';
+    w.style.top  = (e.clientY - drag.y) + 'px';
+  });
+  tb.addEventListener('pointerup', e=>{ drag=null; try{ tb.releasePointerCapture(e.pointerId); }catch(_){} });
+
+  w.querySelectorAll('.wc.close, .tl-close').forEach(b=>b.addEventListener('click',()=>w.classList.add('hidden')));
+  w.querySelectorAll('.wc.min, .tl-min').forEach(b=>b.addEventListener('click',()=>w.classList.add('hidden')));
+  w.querySelectorAll('.wc.max, .tl-max').forEach(b=>b.addEventListener('click',()=>w.classList.toggle('maxed')));
+});
+
+// ---------- Desktop icons ----------
+document.querySelectorAll('.desk-icon').forEach(ic=>{
+  ic.addEventListener('dblclick', ()=>openWin(ic.dataset.launch));
+});
+
+// ---------- Start menu ----------
+const orb = document.getElementById('start-orb');
+const menu = document.getElementById('start-menu');
+orb.addEventListener('click', e=>{ e.stopPropagation(); menu.classList.toggle('hidden'); });
+document.addEventListener('click', e=>{ if(!menu.contains(e.target) && e.target!==orb) menu.classList.add('hidden'); });
+document.querySelectorAll('#start-menu .sm-item[data-launch]').forEach(it=>{
+  it.addEventListener('click', ()=>{ openWin(it.dataset.launch); menu.classList.add('hidden'); });
+});
+
+// ---------- Taskbar buttons ----------
+const apps = document.querySelector('.task-apps');
+windows.forEach(w=>{
+  const b = document.createElement('button');
+  b.className = 'task-app';
+  const t = w.querySelector('.title').textContent.split('—')[0].trim();
+  b.textContent = t.length>18 ? t.slice(0,18)+'…' : t;
+  b.addEventListener('click', ()=>{
+    if(w.classList.contains('hidden')){ w.classList.remove('hidden'); focusWin(w); }
+    else { w.classList.add('hidden'); }
+  });
+  apps.appendChild(b);
+});
+
+// ---------- Calculator ----------
+(function(){
+  const screen = document.getElementById('calc-screen');
+  let cur='0', prev=null, op=null, fresh=true;
+  const render = ()=>{ screen.textContent = cur; };
+  function press(v){
+    if(fresh){ cur = (v==='.') ? '0.' : v; fresh=false; }
+    else if(v==='.'){ if(!cur.includes('.')) cur+='.'; }
+    else { cur = (cur==='0') ? v : cur+v; }
+    render();
+  }
+  function operator(o){
+    if(op && !fresh) equals();
+    prev = parseFloat(cur); op = o; fresh = true;
+  }
+  function equals(){
+    if(op==null || prev==null) return;
+    const n = parseFloat(cur); let r = prev;
+    if(op==='+') r += n;
+    else if(op==='-') r -= n;
+    else if(op==='×') r *= n;
+    else if(op==='÷') r = (n===0) ? 'Error' : r / n;
+    cur = (typeof r==='number') ? String(+r.toPrecision(12)) : r;
+    op=null; prev=null; fresh=true; render();
+  }
+  document.querySelectorAll('.calc-key').forEach(k=>k.addEventListener('click',()=>{
+    const d = k.dataset;
+    if(d.num!=null) press(d.num);
+    else if(d.op) operator(d.op);
+    else if(d.act==='eq') equals();
+    else if(d.act==='ac'){ cur='0'; prev=null; op=null; fresh=true; render(); }
+    else if(d.act==='neg'){ cur = (parseFloat(cur)*-1).toString(); render(); }
+    else if(d.act==='pct'){ cur = (parseFloat(cur)/100).toString(); render(); }
+  }));
+  render();
+})();
+</script>
 </body>
 </html>
